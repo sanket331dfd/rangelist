@@ -88,7 +88,7 @@ rl.print();
 # Additional Assumptions Made
 
 1. Should be integer-based (any other type will be discarded)
-2. May be descending or ascending
+2. Should be ascending (descending will be discarded)
 3. May be overlapping as well
 4. May contain duplicates
 5. Empty ranges will be discarded
