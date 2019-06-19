@@ -1,0 +1,22 @@
+{
+  "name": "rangelist",
+  "version": "1.0.0",
+  "description": "Lists of Ranges",
+  "main": "api.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanket331dfd/rangelist.git"
+  },
+  "author": "Sanket",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanket331dfd/rangelist/issues"
+  },
+  "homepage": "https://github.com/sanket331dfd/rangelist#readme"
+}
