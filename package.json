@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/sanket331dfd/rangelist/issues"
   },
-  "homepage": "https://github.com/sanket331dfd/rangelist#readme"
+  "homepage": "https://github.com/sanket331dfd/rangelist#readme",
+  "devDependencies": {
+    "mocha": "^6.1.4"
+  }
 }

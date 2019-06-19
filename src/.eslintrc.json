@@ -11,5 +11,9 @@
         "quotes": ["error", "single"]
       }
     }
-  ]
+ ],
+
+  "env": {
+    "es6": true
+  }
 }
