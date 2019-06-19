@@ -27,3 +27,5 @@ class RangeList {
     // TODO: implement this
   }
 }
+
+module.exports = RangeList;
