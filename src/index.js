@@ -1,11 +1,11 @@
-"use strict";
+"use strict"
 
 /** A pair of integers define a range, for example: [1, 5). This range includes integers: 1, 2, 3, and 4.
     A range list is an aggregate of these ranges: [1, 5), [10, 11), [100, 201)
 */
 
 let toStr = function() {
-  return this.list;
+  return this.list
 }
 
 class RangeList {
@@ -33,7 +33,7 @@ class RangeList {
     Prints out the list of ranges in the range list
   */
   print() {
-    console.log(toStr());
+    console.log(toStr())
   }
 
   get() {

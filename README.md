@@ -84,3 +84,11 @@ rl.remove([3, 19]);
 rl.print();
 // Should display: [1, 3) [19, 21)
 ```
+
+# Additional Assumptions Made
+
+1. Should be integer-based (any other type will be discarded)
+2. May be descending or ascending
+3. May be overlapping as well
+4. May contain duplicates
+5. Empty ranges will be discarded
