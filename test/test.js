@@ -23,7 +23,7 @@ describe('TC2 Adding one valid range', function () {
   it('should add range', function () {
       let r = new RangeList()
       r.add([1,11])
-      r.add([3,11])
+      r.add([23,24])
       expect(r.get().length).eq(2)
      })
  })
@@ -45,28 +45,25 @@ describe('TC2 Adding one valid range', function () {
      })
  })
 
+ let checkConsole = function (exp, r) {
+  let spy = sinon.spy(console, "log")
+  r.print()
+  sinon.assert.calledWithExactly(spy, exp)
+  spy.restore()
+ }
+
  describe('TC6 Check printed format', function () {
-  it('should print', function () {
-      let r = new RangeList()
-      // Poor man's mocking. This should use a proper mocking mechanism.
-
-      r.add([1,4])
-      r.add([-5,4])
-      let spy = sinon.spy(console, "log")
-      //sinon.assert.calledWithExactly("[1,4], [-5,4]")
-      r.print()
-      sinon.assert.calledWithExactly(spy, "helloo")
-      spy.restore()
-     })
+  let r = new RangeList()
+  r.add([1,4])
+  r.add([5,10])
+  it('should print', function() {
+    checkConsole("[1, 4) [5, 10)", r)
+  })
  })
 
- describe('TC7 Adding non-numeric', function () {
-  it('should *not* be added', function () {
-      let r = new RangeList()
-      r.add(['a','g'])
-      expect(r.get().length).eq(0)
-     })
- })
+
+
+
 
 
 

@@ -13,11 +13,6 @@ Additional Assumptions Made
 
 */
 
-let toStr = function(obj) {
-  let s = obj.list.toString().replace("]", ")")
-  return "hello"
-}
-
 class RangeList {
   constructor() {
     this.list = new Array()
@@ -31,7 +26,16 @@ class RangeList {
     if ((typeof range[0] != "number") ||
         (typeof range[1] != "number")) {
           return
+
     }
+
+    if (range[1] <= range[0]) {
+      return
+    }
+
+    let start = range[0]
+    let end = range[1]
+    // find the range that 'start' is in
 
     if (range[1] > range[0]) {
       this.list.push(range)
@@ -50,7 +54,12 @@ class RangeList {
    * Prints out the list of ranges in the range list
   */
   print() {
-    console.log(toStr(this))
+    let s = ""
+    this.list.forEach((e) => {
+      s += "[" + e[0] + ", " + e[1] + ") "
+    })
+    //s = s.substring(0, s.length - 2)
+    console.log(s.trim())
   }
 
   /**
