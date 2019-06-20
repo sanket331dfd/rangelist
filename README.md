@@ -92,3 +92,81 @@ rl.print();
 3. May be overlapping as well
 4. May contain duplicates
 5. Empty ranges will be discarded
+
+# Test Results
+
+```
+npm test
+
+> rangelist@1.0.0 test C:\Users\drpal\rangelist
+> mocha
+
+
+
+  TC1 Instantiation
+    √ should create a new RangeList object
+
+  TC2 Adding one valid range
+    √ should add range
+
+  TC3 Adding second valid range
+    √ should add range
+
+  TC4 Adding range reversed
+    √ should *not* be added
+
+  TC5 Adding non-numeric
+    √ should *not* be added
+
+  TC6 Check printed format is as expected
+[1, 4) [5, 10)
+    √ should print as [1, 4) [5, 10)
+
+  TC7 partial overlap
+[1, 10)
+    √ should combine into one range
+
+  TC8 when we add a range that is smaller than existing ones
+[1, 2) [5, 9) [10, 40)
+    √ should add at the beginning of list
+
+  when we add a range that does not overlap but is in between
+[45, 56) [90, 95) [100, 900)
+    √ should add a new item in middle of list
+
+  when we add a range that completely overlaps
+[-3, 10)
+    √ should show the superset
+
+  given [1, 5) [10, 21) we add 3,8
+[1, 8) [10, 21)
+    √ should consolidate first one
+
+  given [1, 8) [10, 21) try to remocve 10,10
+[1, 8) [10, 21)
+    √ no change
+
+  given [1, 8) [10, 21) [30, 34) try to remocve 10,21
+[1, 8) [30, 34)
+    √ removes it
+
+  given [1, 8) [10, 21) [30, 34) try to remocve 8,15
+[1, 8) [16, 21) [30, 34)
+    √ removes it
+
+  given [1, 8) [10, 21) [30, 34) try to remocve 2,15
+[1, 2) [16, 21) [30, 34)
+    √ removes it
+
+  given [1, 8) [10, 21) [30, 34) try to remove 2,32
+[1, 2) [33, 34)
+    √ removes it
+
+  given [1, 8) [10, 21) [30, 34) try to remove -3,32
+[33, 34)
+    √ removes it
+
+
+  17 passing (53ms)
+  
+  ```
