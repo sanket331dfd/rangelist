@@ -75,6 +75,8 @@ class RangeList {
     @param {Array<number>} range - Array of two integers that specify beginning and end of range.
   */
   add(range) {
+    if (range.length !== 2) return
+
     if ((typeof range[0] != "number") ||
         (typeof range[1] != "number")) {
           return
@@ -121,6 +123,8 @@ class RangeList {
     @param {Array<number>} range - Array of two integers that specify beginning and end of range.
   */
   remove(range) {
+    if (range.length !== 2) return
+
     if ((typeof range[0] != "number") ||
     (typeof range[1] != "number")) {
       return
