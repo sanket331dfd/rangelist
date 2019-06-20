@@ -13,6 +13,32 @@ Additional Assumptions Made
 
 */
 
+/**
+ * r1 is between r2
+ * @param {*} r1
+ * @param {*} r2
+ */
+function between(r1, r2) {
+  return ((r1[0] >= r2[0]) && (r1[0] <= r2[1]))
+}
+
+/**
+ * Join if two ranges overlap or are adjoining
+ * @param {Array<number>} r1
+ * @param {Array<number>} r2
+ */
+function joinable(r1, r2) {
+  // if there is an overlap then
+  if (between(r1, r2) || between(r2, r1)) {
+    return true
+  }
+  return false
+}
+
+function eq(r1, r2) {
+  return ((r1[0] === r2[0]) && (r1[1] === r2[1]))
+}
+
 class RangeList {
   constructor() {
     this.list = new Array()
@@ -26,28 +52,68 @@ class RangeList {
     if ((typeof range[0] != "number") ||
         (typeof range[1] != "number")) {
           return
-
     }
 
     if (range[1] <= range[0]) {
       return
     }
 
-    let start = range[0]
-    let end = range[1]
-    // find the range that 'start' is in
+    let sr = [] // indices of ranges which we consolidate
 
-    if (range[1] > range[0]) {
-      this.list.push(range)
+    for (let i = 0; i < this.list.length; i++) {
+      let e = this.list[i]
+      if (joinable(range, e)) {
+        sr.push(i) //save index for range to be removed
+        range[0] = Math.min(range[0], e[0])
+        range[1] = Math.max(range[1], e[1])
+      } else {
+        // if no more overlaps but previously had overlaps then stop
+        if (sr.length != 0) break
+
+        // if the selected range is bigger than us
+        // but not overlapping then insert here
+        if (e[0] > range[1]) {
+          this.list.splice(i, 0, range)
+          return
+        }
+      }
     }
+
+    // remove ranges which are already consolidated
+    // and replace with new one
+    if (sr.length > 0) {
+      this.list.splice(sr[0], sr.length, range)
+      return
+    }
+
+    this.list.push(range)
   }
+
 
   /**
     Removes a range from the list
     @param {Array<number>} range - Array of two integers that specify beginning and end of range.
   */
   remove(range) {
-    // TODO: implement this
+    if ((typeof range[0] != "number") ||
+    (typeof range[1] != "number")) {
+      return
+    }
+
+    if (range[1] <= range[0]) {
+      return
+    }
+
+    for(let i = 0; i < this.list.length; i++) {
+      let e = this.list[i]
+      // if we find an exact match just remove it
+      if (eq(range, e)) {
+        this.list.splice(i, 1)
+        return
+      }
+    }
+
+
   }
 
   /**
@@ -58,16 +124,13 @@ class RangeList {
     this.list.forEach((e) => {
       s += "[" + e[0] + ", " + e[1] + ") "
     })
-    //s = s.substring(0, s.length - 2)
     console.log(s.trim())
   }
 
-  /**
-   *
-   */
   get() {
     return this.list
   }
+
 }
 
 
