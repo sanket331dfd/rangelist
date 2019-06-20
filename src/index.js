@@ -35,8 +35,34 @@ function joinable(r1, r2) {
   return false
 }
 
-function eq(r1, r2) {
-  return ((r1[0] === r2[0]) && (r1[1] === r2[1]))
+/**
+ * r1 begins in r2
+ * @param {*} r1
+ * @param {*} r2
+ */
+
+function begins(r1, r2) {
+  if ((r1[0] >= r2[0]) && (r1[0] < r2[1])) { return true }
+  return false
+}
+
+/**
+ * r1 ends in r2
+ * @param {*} r1
+ * @param {*} r2
+ */
+function ends(r1, r2) {
+  if ((r1[1] >= r2[0]) && (r1[1] < r2[1])) { return true }
+  return false
+}
+
+/**
+ * r1 is superset of r2 (includes equality)
+ * @param {} r1
+ * @param {*} r2
+ */
+function superset(r1, r2) {
+  return ((r1[0] <= r2[0]) && (r1[1] >= r2[1]))
 }
 
 class RangeList {
@@ -104,15 +130,38 @@ class RangeList {
       return
     }
 
+    let sr = [] // indices of ranges selected to be removed
+
     for(let i = 0; i < this.list.length; i++) {
       let e = this.list[i]
-      // if we find an exact match just remove it
-      if (eq(range, e)) {
-        this.list.splice(i, 1)
+      // if we find an exact match or a superset mark to remove it
+      if (superset(range, e)) {
+        sr.push(i)
+      }
+      // if range falls within an existing one we need to split the existing one
+      else if (begins(range, e) && ends(range, e)) {
+        this.list.splice(i, 0, [range[1], e[1]])
+        e[1] = range[0]
         return
       }
+      // if range begins in an existing one or ends in an exising one we need to modify that
+      // existing range
+      else if (begins(range, e)) {
+        e[1] = range[0]
+      }
+      else if (ends(range, e)) {
+        // we add one since the new beginning is inclusive and should start with an element that still exists
+        e[0] = range[1] + 1
+        // we can stop iterating since nothing else needs to be checked
+        break
+      }
+
     }
 
+    // delete marked items
+    if (sr.length > 0) {
+      this.list.splice(sr[0], sr.length)
+    }
 
   }
 

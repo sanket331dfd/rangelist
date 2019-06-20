@@ -146,3 +146,36 @@ describe('TC2 Adding one valid range', function () {
   })
  })
 
+ describe('given [1, 8) [10, 21) [30, 34) try to remocve 2,15', function () {
+  let r = new RangeList()
+  r.add([1, 8])
+  r.add([10, 21])
+  r.add([30, 34])
+  r.remove([2, 15])
+  it('removes it', function() {
+    checkConsole("[1, 2) [16, 21) [30, 34)", r)
+  })
+ })
+
+ describe('given [1, 8) [10, 21) [30, 34) try to remove 2,32', function () {
+  let r = new RangeList()
+  r.add([1, 8])
+  r.add([10, 21])
+  r.add([30, 34])
+  r.remove([2, 32])
+  it('removes it', function() {
+    checkConsole("[1, 2) [33, 34)", r)
+  })
+ })
+
+ describe('given [1, 8) [10, 21) [30, 34) try to remove -3,32', function () {
+  let r = new RangeList()
+  r.add([1, 8])
+  r.add([10, 21])
+  r.add([30, 34])
+  r.remove([-3, 32])
+  it('removes it', function() {
+    checkConsole("[33, 34)", r)
+  })
+ })
+
